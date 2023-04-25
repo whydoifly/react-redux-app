@@ -39,8 +39,8 @@ function createStore(reducer, initialState) {
 }
 
 const store = createStore(taskReducer, [
-  { id: 1, description: 'Learn React', done: false },
-  { id: 2, description: 'Learn React 2', done: false },
+  { id: 1, title: 'Learn React', done: false },
+  { id: 2, title: 'Learn React 2', done: false },
 ]);
 
 const App = (params) => {
