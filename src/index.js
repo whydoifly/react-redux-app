@@ -17,7 +17,6 @@ function taskReducer(state, action) {
 
 function createStore(reducer, initialState) {
   let state = initialState;
-  
 
   function getState() {
     return state;
@@ -32,15 +31,16 @@ function createStore(reducer, initialState) {
 
 const store = createStore(taskReducer, [
   { id: 1, description: 'Learn React', done: false },
+  { id: 2, description: 'Learn React 2', done: false },
 ]);
 
 const App = (params) => {
-  console.log(store.getState());
+  const state = store.getState();
 
-  const completeTask = () => {
+  const completeTask = (taskId) => {
     store.dispatch({
       type: 'task/done',
-      payload: { id: 1 },
+      payload: { id: taskId },
     });
     console.log(store.getState());
   };
@@ -48,7 +48,17 @@ const App = (params) => {
   return (
     <>
       <h1>App</h1>
-      <button onClick={completeTask}>Complete</button>
+      
+      <ul>
+        {state.map((el) => (
+          <li key={el.id}>
+            <p>{el.description}</p>
+            <p>{`Completed: ${el.completed}`}</p>
+            <button onClick={() => completeTask(el.id)}>Complete</button>
+            <hr />
+          </li>
+        ))}
+      </ul>
     </>
   );
 };
