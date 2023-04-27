@@ -1,30 +1,23 @@
-export const TASK_UPDATED = 'task/updated';
-export const TASK_DELETED = 'task/deleted';
+import { createAction } from '@reduxjs/toolkit';
+
+const update = createAction('task/updated');
+const remove = createAction('task/removed');
 
 export function taskUpdated(id) {
-  return {
-    type: TASK_UPDATED,
-    payload: { id, done: true },
-  };
+  return update({ id, done: true });
 }
 
 export function taskDeleted(id) {
-  return {
-    type: TASK_DELETED,
-    payload: { id },
-  };
+  return remove({ id });
 }
 
-export function titleChanged(id, title) {
-  return {
-    type: TASK_UPDATED ,
-    payload: { id, title: `New title for ${id}` },
-  };
+export function titleChanged(id) {
+  return update({ id, title: `New title for ${id}` });
 }
 
 function taskReducer(state = [], action) {
   switch (action.type) {
-    case TASK_UPDATED : {
+    case update.type: {
       const newArray = [...state];
       const elementIndex = newArray.findIndex(
         (el) => el.id === action.payload.id
@@ -35,7 +28,7 @@ function taskReducer(state = [], action) {
       };
       return newArray;
     }
-    case TASK_DELETED: {
+    case remove.type: {
       return state.filter((el) => el.id !== action.payload.id);
     }
     default:
@@ -43,4 +36,4 @@ function taskReducer(state = [], action) {
   }
 }
 
-export default taskReducer
+export default taskReducer;
