@@ -8,11 +8,11 @@ export function taskCompleted(id) {
 }
 
 export function taskDeleted(id) {
-    return {
-      type: actionTypes.taskDeleted,
-      payload: { id },
-    };
-  }
+  return {
+    type: actionTypes.taskDeleted,
+    payload: { id },
+  };
+}
 
 export function titleChanged(id, title) {
   return {
