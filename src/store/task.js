@@ -40,7 +40,7 @@ export const getTasks = () => async (dispatch) => {
 };
 
 export const completeTask = (id) => (dispatch, getState) => {
-  dispatch(update({ id, done: true }));
+  dispatch(update({ id, completed: true }));
 };
 
 export function taskDeleted(id) {
