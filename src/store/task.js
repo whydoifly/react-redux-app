@@ -22,9 +22,9 @@ const taskSlice = createSlice({
       };
     },
     remove(state, action) {
-      return (state.entities = state.entities.filter(
+      state.entities = state.entities.filter(
         (el) => el.id !== action.payload.id
-      ));
+      );
     },
     taskRequested(state) {
       state.isLoading = true;
@@ -38,7 +38,7 @@ const taskSlice = createSlice({
 const { actions, reducer: taskReducer } = taskSlice;
 const { update, remove, recieved, taskRequested, taskRequestFailed } = actions;
 
-export const getTasks = () => async (dispatch) => {
+export const loadTasks = () => async (dispatch) => {
   dispatch(taskRequested());
   try {
     const data = await todosService.fetch();
@@ -60,5 +60,8 @@ export function taskDeleted(id) {
 export function titleChanged(id) {
   return update({ id, title: `New title for ${id}` });
 }
+
+export const getTasks = () => (state) => state.tasks.entities;
+export const getTasksLoadingStatus = () => (state) => state.tasks.isLoading;
 
 export default taskReducer;
