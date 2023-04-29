@@ -12,7 +12,9 @@ import { Provider, useSelector, useDispatch } from 'react-redux';
 const store = configureStore();
 
 const App = (params) => {
-  const state = useSelector((state) => state);
+  const state = useSelector((state) => state.entities);
+  const isLoading = useSelector((state) => state.isLoading);
+  const error = useSelector((state) => state.error);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,6 +25,12 @@ const App = (params) => {
     console.log(taskId);
     dispatch(taskDeleted(taskId));
   };
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   const changeTitle = (taskId) => {
     dispatch(titleChanged(taskId));
