@@ -7,6 +7,7 @@ import {
   getTasks,
   loadTasks,
   getTasksLoadingStatus,
+  createTask,
 } from './store/task';
 import configureStore from './store/store';
 import { Provider, useSelector, useDispatch } from 'react-redux';
@@ -19,10 +20,22 @@ const App = (params) => {
   const isLoading = useSelector(getTasksLoadingStatus());
   const error = useSelector(getError());
   const dispatch = useDispatch();
+  console.log(state);
 
   useEffect(() => {
     dispatch(loadTasks());
   }, [dispatch]);
+
+  const addNewTask = () => {
+    dispatch(
+      createTask({
+        userId: 1,
+        id: 11,
+        title: 'Some New Task',
+        completed: false,
+      })
+    );
+  };
 
   const deleteTask = (taskId) => {
     dispatch(taskDeleted(taskId));
@@ -41,7 +54,7 @@ const App = (params) => {
   return (
     <>
       <h1>App</h1>
-
+      <button onClick={addNewTask}>Add task</button>
       <ul>
         {state.map((el) => (
           <li key={el.id}>
